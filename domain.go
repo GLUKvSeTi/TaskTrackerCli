@@ -28,7 +28,7 @@ type TaskStorage struct {
 
 type TaskRepository interface {
 	Load() (*TaskStorage, error)
-	Save(*Task) error
+	Save(*TaskStorage) error
 }
 
 type TaskService interface {

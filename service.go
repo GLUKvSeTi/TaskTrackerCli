@@ -60,8 +60,8 @@ func (ts *TaskServiceImpl) Update(id int, title, description string) error {
 }
 
 func (ts *TaskServiceImpl) Delete(id int) error {
-	for i := range ts.store.Tasks {
-		if ts.store.Tasks[i].ID == id {
+	for i, task := range ts.store.Tasks {
+		if task.ID == id {
 			ts.store.Tasks = append(ts.store.Tasks[:i], ts.store.Tasks[i+1:]...)
 			return ts.save()
 		}
