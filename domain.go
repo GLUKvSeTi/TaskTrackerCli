@@ -25,3 +25,21 @@ type TaskStorage struct {
 	Tasks  []Task `json:tasks`
 	NextID int    `json:"next_id"`
 }
+
+type TaskRepository interface {
+	Load() (*TaskStorage, error)
+	Save(*Task) error
+}
+
+type TaskService interface {
+	Add(title, description string) error
+	Update(id int, title, description string) error
+	Delete(id int) error
+
+	UpdateStatus(id int, status Status) error
+
+	//вспомогательные операсьоны
+	FindByID(id int) (*Task, error)
+	GetAll() []Task
+	GetAllByStatus(status Status) []Task
+}
