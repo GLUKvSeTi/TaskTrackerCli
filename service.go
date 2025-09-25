@@ -69,3 +69,29 @@ func (ts *TaskServiceImpl) Delete(id int) error {
 
 	return fmt.Errorf("404 not found: %d", id)
 }
+
+func (ts *TaskServiceImpl) UpdateStatus(id int, status Status) error {
+	for i := range ts.store.Tasks {
+		if ts.store.Tasks[i].ID == id {
+			ts.store.Tasks[i].Status = status
+			return ts.save()
+		}
+	}
+	return nil
+}
+
+func (ts *TaskServiceImpl) GetAllByStatus(status Status) []Task {
+	var tasks []Task
+	for _, task := range ts.store.Tasks {
+		if task.Status == status {
+			tasks = append(tasks, task)
+		}
+	}
+	return tasks
+}
+
+func (ts *TaskServiceImpl) GetAll() []Task {
+	tasks := make([]Task, len(ts.store.Tasks))
+	copy(tasks, ts.store.Tasks)
+	return tasks
+}
